@@ -1,0 +1,33 @@
+MISE À JOUR — GS SIGMA / PAUME PAR CAMÉRA
+
+Modifications de cette version :
+- Enregistrement et remplacement des paumes depuis Paramètres, réservé à l'administrateur.
+- Bouton spécifique permettant à l'administrateur connecté d'enregistrer/remplacer sa propre paume.
+- Fenêtre caméra placée en haut de la section d'enregistrement, avant la liste des personnes.
+- Zone vidéo sans contour de main : la personne place simplement sa main ouverte au centre de l’image.
+- Dans Scanner / Pointer, choix préalable entre QR code et paume; seule la caméra du mode sélectionné s'affiche.
+- Détection des 21 points de repère de la main avec MediaPipe Hands lorsque la bibliothèque est accessible.
+- Vérification de l’ouverture des cinq doigts à partir des points de repère, avec une acquisition plus fréquente.
+- Plusieurs échantillons sont collectés lors de l’enregistrement pour améliorer la tolérance aux petites variations de position.
+- Après une main non reconnue, le scanner reste actif et peut détecter rapidement la main suivante.
+
+IMPORTANT — LIMITE BIOMÉTRIQUE
+La détection des points de repère améliore la détection de la main et des cinq doigts, mais ne constitue pas une identification biométrique certifiée. Le descripteur d’image et la géométrie de la main peuvent encore produire des faux positifs ou faux rejets selon la caméra, la lumière et la position. Une identification sans confusion ne peut pas être garantie avec une caméra ordinaire. Pour un usage sensible, utiliser un lecteur biométrique spécialisé avec détection du vivant, seuils validés et protections serveur.
+
+La caméra nécessite HTTPS ou localhost et l'autorisation du navigateur. Tester avec une sauvegarde de la base avant déploiement.
+
+
+CORRECTIF DU 29/10/2026 — CONTOUR ET RECONNAISSANCE
+- Remplacement de l’overlay HUD par un guide de main fixe visible dès l’ouverture de la caméra.
+- Ajout d’une recherche par nom dans la liste des personnes à enregistrer.
+- L’enregistrement collecte plusieurs échantillons visuels successifs lorsque les cinq doigts sont détectés.
+- La comparaison accepte les anciens descripteurs pour ne pas invalider immédiatement les enregistrements déjà présents. Les nouveaux enregistrements utilisent un descripteur de contraste et de contours plus compact.
+- Cette méthode par image caméra reste expérimentale et n’est pas une reconnaissance biométrique certifiée ; tester avec plusieurs mains et conditions d’éclairage avant tout déploiement.
+
+CORRECTIF DU 31/10/2026 — DÉTECTION RAPIDE SANS CONTOUR
+- Remplacement du contrôle visuel de cinq doigts par les points de repère MediaPipe Hands (21 points) lorsque le modèle en ligne est disponible.
+- Acquisition caméra optimisée et contrôle environ toutes les 140 ms.
+- Le scanner reste actif après une main non reconnue ; une main suivante peut être présentée sans redémarrer la caméra.
+- Suppression du message faisant référence à un contour inexistant.
+- Les nouveaux profils combinent le descripteur d’image avec la géométrie normalisée des points de la main. Les profils antérieurs restent comparables grâce à la compatibilité des longueurs de descripteurs.
+- MediaPipe Hands est chargé depuis jsDelivr : une connexion Internet est nécessaire au premier chargement. En cas d’indisponibilité, le mode de détection standard reste disponible.
